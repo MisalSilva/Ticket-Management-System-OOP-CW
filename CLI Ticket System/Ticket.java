@@ -36,6 +36,7 @@ public class Ticket {
         this.ticketPrice = ticketPrice;
     }
 
+    //toString Method
     public String toString() {
         return "Ticket [ticketId=" + ticketId + ", eventName=" + eventName + ", ticketPrice="
                 + ticketPrice + "]";
