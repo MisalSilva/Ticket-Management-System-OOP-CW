@@ -4,20 +4,60 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Enter the maximum capacity for the ticket queue: ");
-        int maxCapacity = sc.nextInt();
+        int maxCapacity;
+        while (true) {
+            System.out.print("Enter the maximum capacity for the ticket queue: ");
+            maxCapacity = sc.nextInt();
+            if (maxCapacity <= 0) {
+                System.out.println("Error: Maximum capacity cannot be less than or equal to zero. Please try again.");
+            }else {
+                break;
+            }
+        }
 
-        System.out.print("Enter the total number of Tickets for each vendor: ");
-        int totalTickets = sc.nextInt();
+        int totalTickets;
+        while (true) {
+            System.out.print("Enter the total number of Tickets for each vendor: ");
+            totalTickets = sc.nextInt();
+            if (totalTickets <= 0) {
+                System.out.println("Error: Total number of tickets cannot be less than or equal to zero. Please try again.");
+            }else{
+                break;
+            }
+        }
 
-        System.out.print("Enter the ticket release rate (in seconds) for each Vendor: ");
-        int ticketReleaseRate = sc.nextInt();
+        int ticketReleaseRate;
+        while (true) {
+            System.out.print("Enter the ticket release rate for each vendor: ");
+            ticketReleaseRate = sc.nextInt();
+            if (ticketReleaseRate <= 0) {
+                System.out.println("Error: Ticket Release Rate cannot be less than or equal to zero. Please try again.");
+            }else {
+                break;
+            }
+        }
 
-        System.out.print("Enter the Quantity you want to Buy: ");
-        int quantity = sc.nextInt();
+        int quantity;
+        while (true) {
+            System.out.print("Enter the Ticket Quantity for each customer: ");
+            quantity = sc.nextInt();
+            if (quantity <= 0) {
+                System.out.println("Error: Ticket Quantity cannot be less or equal to zero. Please try again.");
+            }else {
+                break;
+            }
+        }
 
-        System.out.print("Enter the ticket retrieval rate (in seconds) for each Customer: ");
-        int ticketRetrievalRate = sc.nextInt();
+        int ticketRetrievalRate;
+        while (true) {
+            System.out.print("Enter the ticket retrieval rate for each vendor: ");
+            ticketRetrievalRate = sc.nextInt();
+            if (ticketRetrievalRate <= 0) {
+                System.out.println("Error: Ticket Release Rate cannot be less or equal to zero. Please try again.");
+            }else {
+                break;
+            }
+        }
 
         TicketPool ticketPool = new TicketPool(maxCapacity); //The Ticket pool which is shared among the vendors and customers
 
