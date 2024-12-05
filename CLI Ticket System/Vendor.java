@@ -5,6 +5,12 @@ public class Vendor implements Runnable{
     private int totalTickets; //tickets vendor will sell
     private int ticketReleaseRate; //frequency tickets will be added to the pool
 
+    public Vendor(TicketPool ticketPool, int totalTickets, int ticketReleaseRate) {
+        this.ticketPool = ticketPool;
+        this.totalTickets = totalTickets;
+        this.ticketReleaseRate = ticketReleaseRate;
+    }
+
     //implement the thread
     //Runnable interface should write the implementation for Runnable interface
     @Override
