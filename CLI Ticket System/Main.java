@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -6,49 +7,69 @@ public class Main {
 
         int maxCapacity;
         while (true) {
-            System.out.print("Enter the maximum capacity for the ticket queue: ");
-            maxCapacity = sc.nextInt();
-            sc.nextLine();
-            if (maxCapacity <= 0) {
-                System.out.println("Error: Maximum capacity cannot be less than or equal to zero. Please try again.");
-            }else {
-                break;
+            try {
+                System.out.print("Enter the maximum capacity for the ticket queue: ");
+                maxCapacity = sc.nextInt();
+                sc.nextLine(); // Consume the newline character
+                if (maxCapacity <= 0) {
+                    System.out.println("Error: Maximum capacity cannot be less than or equal to zero. Please try again.");
+                } else {
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Invalid input. Please enter a positive integer.");
+                sc.nextLine(); // Clear the invalid input
             }
         }
 
         int totalTickets;
         while (true) {
-            System.out.print("Enter the total number of Tickets for each vendor: ");
-            totalTickets = sc.nextInt();
-            sc.nextLine();
-            if (totalTickets <= 0) {
-                System.out.println("Error: Total number of tickets cannot be less than or equal to zero. Please try again.");
-            }else{
-                break;
+            try {
+                System.out.print("Enter the total number of Tickets for each vendor: ");
+                totalTickets = sc.nextInt();
+                sc.nextLine();
+                if (totalTickets <= 0) {
+                    System.out.println("Error: Total number of tickets cannot be less than or equal to zero. Please try again.");
+                } else {
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Invalid input. Please enter a positive integer.");
+                sc.nextLine();
             }
         }
 
         int ticketReleaseRate;
         while (true) {
-            System.out.print("Enter the ticket release rate for each vendor: ");
-            ticketReleaseRate = sc.nextInt();
-            sc.nextLine();
-            if (ticketReleaseRate <= 0) {
-                System.out.println("Error: Ticket Release Rate cannot be less than or equal to zero. Please try again.");
-            }else {
-                break;
+            try {
+                System.out.print("Enter the ticket release rate for each vendor: ");
+                ticketReleaseRate = sc.nextInt();
+                sc.nextLine();
+                if (ticketReleaseRate <= 0) {
+                    System.out.println("Error: Ticket Release Rate cannot be less than or equal to zero. Please try again.");
+                } else {
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Invalid input. Please enter a positive integer.");
+                sc.nextLine();
             }
         }
 
         int ticketRetrievalRate;
         while (true) {
-            System.out.print("Enter the ticket retrieval rate for each vendor: ");
-            ticketRetrievalRate = sc.nextInt();
-            sc.nextLine();
-            if (ticketRetrievalRate <= 0) {
-                System.out.println("Error: Ticket Release Rate cannot be less or equal to zero. Please try again.");
-            }else {
-                break;
+            try {
+                System.out.print("Enter the ticket retrieval rate for each vendor: ");
+                ticketRetrievalRate = sc.nextInt();
+                sc.nextLine();
+                if (ticketRetrievalRate <= 0) {
+                    System.out.println("Error: Ticket Retrieval Rate cannot be less than or equal to zero. Please try again.");
+                } else {
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Invalid input. Please enter a positive integer.");
+                sc.nextLine();
             }
         }
 
