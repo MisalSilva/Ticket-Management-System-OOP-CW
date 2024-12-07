@@ -1,8 +1,3 @@
-//import java.util.InputMismatchException;
-//import java.util.Scanner;
-//import java.io.BufferedWriter;
-//import java.io.FileWriter;
-//import java.io.IOException;
 import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -16,8 +11,18 @@ public class Main {
         int ticketReleaseRate = 0;
         int ticketRetrievalRate = 0;
 
-        System.out.print("Do you want to use previously saved Configuration data: ");
+        System.out.print("Do you want to use previously saved Configuration data (yes/no): ");
         String useSavedData = sc.nextLine();
+        while (true) {
+            if (useSavedData.equals("yes") || useSavedData.equals("no")) {
+                break; // Exit loop if input is valid
+            } else {
+                System.out.println("Error: Invalid input. Please enter 'yes' or 'no'.");
+                System.out.print("Do you want to use previously saved Configuration data (yes/no): ");
+                useSavedData = sc.nextLine();
+            }
+        }
+
         if (useSavedData.equals("yes")) {
             try {
                 int[] configValues = readConfigurations("config.txt");
@@ -107,15 +112,10 @@ public class Main {
             System.out.println("Configuration parameters saved to config.txt.");
         }
 
-
-
-
         String command;
         while (true) {
             System.out.print("Enter 'start' to begin: ");
             command = sc.nextLine();
-
-
 
             if (command.equals("stop")) {
                 System.out.println("Stopping program...");
@@ -135,7 +135,7 @@ public class Main {
 
                 Customer[] customers = new Customer[5];// Array of customers, for convenience i have used an array of objects
                 for (int i = 0; i < customers.length; i++) {
-                    customers[i] = new Customer(ticketPool,ticketRetrievalRate,5);
+                    customers[i] = new Customer(ticketPool,ticketRetrievalRate,3);
                     Thread customerThread = new Thread(customers[i], "Customer " + (i+1));// used 3rd constructor of thread class
                     customerThread.start();
                 }
