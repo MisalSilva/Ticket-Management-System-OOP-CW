@@ -11,6 +11,8 @@ public class Main {
         int ticketReleaseRate = 0;
         int ticketRetrievalRate = 0;
 
+        System.out.println("*** Welcome to the Ticket Management System ***");
+
         System.out.print("Do you want to use previously saved Configuration data (yes/no): ");
         String useSavedData = sc.nextLine();
         while (true) {
@@ -109,7 +111,7 @@ public class Main {
 
             // Save parameters to a text file
             saveConfigurations(maxCapacity, totalTickets, ticketReleaseRate, ticketRetrievalRate);
-            System.out.println("Configuration parameters saved to config.txt.");
+            System.out.println("Configuration parameters saved to config.txt...");
         }
 
         String command;
@@ -139,6 +141,8 @@ public class Main {
                     Thread customerThread = new Thread(customers[i], "Customer " + (i+1));// used 3rd constructor of thread class
                     customerThread.start();
                 }
+            }else {
+                System.out.println("Error: Invalid command. Please try again.");
             }
         }
     }
