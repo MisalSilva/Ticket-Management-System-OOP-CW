@@ -5,7 +5,6 @@ public class TicketPool {
     private Queue<Ticket> ticktetQueue;
     private int maximumCapacity;
 
-
     public TicketPool(int maximumCapacity) {
         this.maximumCapacity = maximumCapacity;
         this.ticktetQueue = new LinkedList<>();
@@ -35,6 +34,7 @@ public class TicketPool {
         while(ticktetQueue.isEmpty()) {
             try{
                 wait(); //wait if the queue is empty
+                System.out.println("Waiting for vendors to add Tickets");
             }catch(InterruptedException e) {
                 throw new RuntimeException(e.getMessage());
             }
@@ -45,9 +45,9 @@ public class TicketPool {
         // print the message to show the thread name who bought and current size of the pool
         System.out.println(Thread.currentThread().getName() + " has bought a ticket from the pool. " +
                 "Current size is " + ticktetQueue.size() +".");
-
         return ticket;
     }
-
-
 }
+
+
+

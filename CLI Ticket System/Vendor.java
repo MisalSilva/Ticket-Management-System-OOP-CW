@@ -11,20 +11,6 @@ public class Vendor implements Runnable{
         this.ticketReleaseRate = ticketReleaseRate;
     }
 
-//    public void setTotalTickets(int totalTickets) {
-//        this.totalTickets = totalTickets;
-//    }
-//    public void setTicketReleaseRate(int ticketReleaseRate) {
-//        this.ticketReleaseRate = ticketReleaseRate;
-//    }
-//
-//    public int getTotalTickets() {
-//        return totalTickets;
-//    }
-//    public int getTicketReleaseRate() {
-//        return ticketReleaseRate;
-//    }
-
     //implement the thread
     //Runnable interface should write the implementation for Runnable interface
     @Override
@@ -42,5 +28,8 @@ public class Vendor implements Runnable{
             }
         }
     }
-
 }
+
+
+
+

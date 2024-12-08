@@ -11,9 +11,15 @@ public class Main {
         int ticketReleaseRate = 0;
         int ticketRetrievalRate = 0;
 
-        System.out.println("*** Welcome to the Ticket Management System ***");
+        // ANSI escape code for colored text
+        final String BLUE = "\u001B[34m";
+        final String YELLOW = "\u001B[33m";
+        final String CYAN = "\u001B[36m";
+        final String RESET = "\u001B[0m"; // Reset color
 
-        System.out.print("Do you want to use previously saved Configuration data (yes/no): ");
+        System.out.println(CYAN + "*-*-*-*-*-* Welcome to the Ticket Management System *-*-*-*-*-*" + RESET);
+
+        System.out.print(BLUE + "Do you want to use previously saved Configuration data (yes/no): ");
         String useSavedData = sc.nextLine();
         while (true) {
             if (useSavedData.equals("yes") || useSavedData.equals("no")) {
@@ -63,7 +69,7 @@ public class Main {
 
             while (true) {
                 try {
-                    System.out.print("Enter the total number of Tickets for each vendor: ");
+                    System.out.print("Enter the total number of Tickets: ");
                     totalTickets = sc.nextInt();
                     sc.nextLine();
                     if (totalTickets <= 0) {
@@ -79,7 +85,7 @@ public class Main {
 
             while (true) {
                 try {
-                    System.out.print("Enter the ticket release rate for each vendor: ");
+                    System.out.print("Enter the ticket release rate: ");
                     ticketReleaseRate = sc.nextInt();
                     sc.nextLine();
                     if (ticketReleaseRate <= 0) {
@@ -95,7 +101,7 @@ public class Main {
 
             while (true) {
                 try {
-                    System.out.print("Enter the ticket retrieval rate for each vendor: ");
+                    System.out.print("Enter the ticket retrieval rate: ");
                     ticketRetrievalRate = sc.nextInt();
                     sc.nextLine();
                     if (ticketRetrievalRate <= 0) {
@@ -111,7 +117,7 @@ public class Main {
 
             // Save parameters to a text file
             saveConfigurations(maxCapacity, totalTickets, ticketReleaseRate, ticketRetrievalRate);
-            System.out.println("Configuration parameters saved to config.txt...");
+            System.out.println("Configuration parameters saved to file config.txt...");
         }
 
         String command;
@@ -123,46 +129,37 @@ public class Main {
                 System.out.println("Stopping program...");
                 break;
 
-            }else if (command.equals("start")) {
+            } else if (command.equals("start")) {
                 System.out.println("Starting program...");
 
                 TicketPool ticketPool = new TicketPool(maxCapacity); //The Ticket pool which is shared among the vendors and customers
 
-                Vendor[] vendors = new Vendor[5]; //Array of vendor, for convenience i have used an array of objects
+                //int vendorCount = 5; // Hardcoded number of vendors
+                Vendor[] vendors = new Vendor[5];
+                int ticketsPerVendor = totalTickets / 5;
+                int remainingTickets = totalTickets % 5;
+
                 for (int i = 0; i < vendors.length; i++) {
-                    vendors[i] = new Vendor(ticketPool,totalTickets, ticketReleaseRate);
-                    Thread vendorThread = new Thread(vendors[i], "Vendor " + (i+1)); // used 3rd constructor of thread class
-                    vendorThread.start();// start the vendor thread
+                    int vendorTickets = ticketsPerVendor + (i < remainingTickets ? 1 : 0); // Distribute remaining tickets
+                    vendors[i] = new Vendor(ticketPool, vendorTickets, ticketReleaseRate);
+                    Thread vendorThread = new Thread(vendors[i], "Vendor " + (i + 1));
+                    vendorThread.start();
                 }
 
                 Customer[] customers = new Customer[5];// Array of customers, for convenience i have used an array of objects
                 for (int i = 0; i < customers.length; i++) {
-                    customers[i] = new Customer(ticketPool,ticketRetrievalRate,3);
-                    Thread customerThread = new Thread(customers[i], "Customer " + (i+1));// used 3rd constructor of thread class
+                    customers[i] = new Customer(ticketPool, ticketRetrievalRate);
+                    Thread customerThread = new Thread(customers[i], "Customer " + (i + 1));// used 3rd constructor of thread class
                     customerThread.start();
                 }
-            }else {
+            }else{
                 System.out.println("Error: Invalid command. Please try again.");
             }
         }
     }
 
-//    private static void saveConfigurations(int maxCapacity, int totalTickets, int ticketReleaseRate, int ticketRetrievalRate) {
-//        try (BufferedWriter writer = new BufferedWriter(new FileWriter("config.txt"))) {
-//            writer.write("Maximum Capacity: " + maxCapacity);
-//            writer.newLine();
-//            writer.write("Total Tickets: " + totalTickets);
-//            writer.newLine();
-//            writer.write("Ticket Release Rate: " + ticketReleaseRate);
-//            writer.newLine();
-//            writer.write("Ticket Retrieval Rate: " + ticketRetrievalRate);
-//            writer.newLine();
-//        } catch (IOException e) {
-//            System.out.println("Error saving configurations: " + e.getMessage());
-//        }
-//    }
-
-    private static void saveConfigurations(int maxCapacity, int totalTickets, int ticketReleaseRate, int ticketRetrievalRate) {
+    private static void saveConfigurations ( int maxCapacity, int totalTickets, int ticketReleaseRate,
+    int ticketRetrievalRate){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("config.txt"))) {
             writer.write("Maximum Capacity: " + maxCapacity);
             writer.newLine();
@@ -177,17 +174,7 @@ public class Main {
         }
     }
 
-//    private static int[] readConfigurations(String fileName) throws IOException {
-//        int[] configValues = new int[4];
-//        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-//            for (int i = 0; i < configValues.length; i++) {
-//                configValues[i] = Integer.parseInt(reader.readLine().trim());
-//            }
-//        }
-//        return configValues;
-//    }
-
-    private static int[] readConfigurations(String fileName) throws IOException {
+    private static int[] readConfigurations (String fileName) throws IOException {
         int[] configValues = new int[4];
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             configValues[0] = parseConfigLine(reader.readLine(), "Maximum Capacity: ");
@@ -198,16 +185,13 @@ public class Main {
         return configValues;
     }
 
-    private static int parseConfigLine(String line, String prefix) {
+    private static int parseConfigLine (String line, String prefix){
         if (line.startsWith(prefix)) {
             return Integer.parseInt(line.substring(prefix.length()).trim());
         } else {
             throw new IllegalArgumentException("Invalid configuration format: " + line);
         }
     }
-
-
-
 }
 
 
