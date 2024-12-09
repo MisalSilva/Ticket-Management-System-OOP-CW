@@ -39,7 +39,7 @@ public class Ticket {
     //toString Method
     @Override
     public String toString() {
-        return "Ticket [ticketId=" + ticketId + ", eventName=" + eventName + ", ticketPrice="
+        return "[Id=" + ticketId + ", Event=" + eventName + ", Price="
                 + ticketPrice + "]";
     }
 }

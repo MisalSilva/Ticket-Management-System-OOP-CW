@@ -26,7 +26,7 @@ public class TicketPool {
         notifyAll(); // Notify all the waiting threads
         // print the message to show the thread name who added and the updated size of the pool
         System.out.println(Thread.currentThread().getName() + " has added a ticket to the pool. " +
-                "Current size is " + this.ticktetQueue.size()+".");
+                "Available Tickets: " + this.ticktetQueue.size()+".");
     }
 
     // Buy ticket method used by the customers
@@ -34,7 +34,6 @@ public class TicketPool {
         while(ticktetQueue.isEmpty()) {
             try{
                 wait(); //wait if the queue is empty
-                System.out.println("Waiting for vendors to add Tickets");
             }catch(InterruptedException e) {
                 throw new RuntimeException(e.getMessage());
             }
@@ -43,8 +42,8 @@ public class TicketPool {
         Ticket ticket = ticktetQueue.poll(); //remove ticket from queue(front of the queue)
         notifyAll(); // notify all waiting threads
         // print the message to show the thread name who bought and current size of the pool
-        System.out.println(Thread.currentThread().getName() + " has bought a ticket from the pool. " +
-                "Current size is " + ticktetQueue.size() +".");
+        System.out.println("Ticket bought by " + Thread.currentThread().getName() + ": Ticket " + ticket + "," +
+                "Available Tickets: " + ticktetQueue.size() +".");
         return ticket;
     }
 }

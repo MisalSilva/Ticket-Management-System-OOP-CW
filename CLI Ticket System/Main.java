@@ -13,7 +13,6 @@ public class Main {
 
         // ANSI escape code for colored text
         final String BLUE = "\u001B[34m";
-        final String YELLOW = "\u001B[33m";
         final String CYAN = "\u001B[36m";
         final String RESET = "\u001B[0m"; // Reset color
 
@@ -146,12 +145,13 @@ public class Main {
                     vendorThread.start();
                 }
 
-                Customer[] customers = new Customer[5];// Array of customers, for convenience i have used an array of objects
+                Customer[] customers = new Customer[5];
                 for (int i = 0; i < customers.length; i++) {
                     customers[i] = new Customer(ticketPool, ticketRetrievalRate);
-                    Thread customerThread = new Thread(customers[i], "Customer " + (i + 1));// used 3rd constructor of thread class
+                    Thread customerThread = new Thread(customers[i], "Customer " + (i + 1));
                     customerThread.start();
                 }
+
             }else{
                 System.out.println("Error: Invalid command. Please try again.");
             }
@@ -159,7 +159,7 @@ public class Main {
     }
 
     private static void saveConfigurations ( int maxCapacity, int totalTickets, int ticketReleaseRate,
-    int ticketRetrievalRate){
+                                             int ticketRetrievalRate){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("config.txt"))) {
             writer.write("Maximum Capacity: " + maxCapacity);
             writer.newLine();
