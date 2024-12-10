@@ -10,6 +10,16 @@ import java.util.Queue;
 public class TicketPoolService {
     private final Queue<Ticket> ticketQueue = new LinkedList<>();
     private final int maxCapacity = 100; // Example capacity
+    private final TicketBroadcastService broadcastService = null;
+    private final int maximumCapacity;
+    private final LinkedList<Object> ticktetQueue;
+
+    public TicketPoolService(int maximumCapacity, TicketBroadcastService broadcastService) {
+        broadcastService = new TicketBroadcastService();
+        this.maximumCapacity = maximumCapacity;
+        this.ticktetQueue = new LinkedList<>();
+//        this.broadcastService = broadcastService;
+    }
 
     public synchronized void addTicket(Ticket ticket) throws InterruptedException {
         while (ticketQueue.size() >= maxCapacity) {
@@ -17,6 +27,8 @@ public class TicketPoolService {
         }
         ticketQueue.add(ticket);
         notifyAll();
+
+        broadcastService.broadcastTicketUpdate(this.ticktetQueue.size(), maximumCapacity);
     }
 
     public synchronized Ticket buyTicket() throws InterruptedException {
@@ -25,6 +37,7 @@ public class TicketPoolService {
         }
         Ticket ticket = ticketQueue.poll();
         notifyAll();
+        broadcastService.broadcastTicketUpdate(this.ticktetQueue.size(), maximumCapacity);
         return ticket;
     }
 
