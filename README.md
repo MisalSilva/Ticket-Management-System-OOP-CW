@@ -27,7 +27,6 @@ Upon starting the application, you will be prompted to configure the following p
 - Maximum Capacity for the Ticket Queue: The total number of tickets the pool can hold at any time.
 - Total Tickets for Each Vendor: The number of tickets each vendor will contribute.
 - Ticket Release Rate (in seconds): The rate at which each vendor adds tickets to the pool.
-- Quantity to Buy: The number of tickets each customer will attempt to retrieve.
 - Ticket Retrieval Rate (in seconds): The rate at which customers retrieve tickets from the pool
 
 ### Starting the System
